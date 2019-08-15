@@ -1,5 +1,5 @@
 {
-  "name": "awesomeslashcommand",
+  "name": "bingmovies",
   "version": "1.0.0",
   "description": "The awesomest slash command evar.",
   "main": "index.js",
@@ -27,6 +27,9 @@
   "dependencies": {
     "botkit": "0.0.5",
     "botkit-storage-mongo": "^1.0.2",
-    "mongodb": "^1.4.39"
+    "jsdom": "^15.1.1",
+    "mongodb": "^1.4.39",
+    "cron-parser": "^0.6.1",
+    "xmlhttprequest":"1.8.0"
   }
 }
