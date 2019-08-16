@@ -31,5 +31,9 @@
     "mongodb": "^1.4.39",
     "cron-parser": "^0.6.1",
     "xmlhttprequest":"1.8.0"
-  }
+  },
+  "scripts": {
+    "start": "CLIENT_ID=702133725266.722571857703 CLIENT_SECRET=286a76307a134797aa0b2023aa355a76 PORT=8765 VERIFICATION_TOKEN=V98GpDAoA3ZiNI5DUnhUJICz npm start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
 }
