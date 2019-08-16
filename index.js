@@ -105,10 +105,6 @@ scheduler(reportingInterval, function() {
     sendDailyMovieQuote();    
 });
 
-scheduler("0 * * * * *", function() {
-    sendDailyMovieQuote();    
-});
-
 function sendDailyBingImage() {
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "https://hooks.slack.com/services/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", true);
@@ -226,16 +222,6 @@ return {
             };
 }
 
-controller.on('block_actions', function(bot, message) {
-console.log("HERE block");
-
-});
-controller.on('interactive_message_callback', function(bot, message) {
-console.log("here interactive_message_callback");
-});
-controller.hears('hello', 'direct_message', function (bot, message) {
-    bot.reply(message, 'Hello!');
-});
 controller.on('slash_command', function (slashCommand, message) {
 
     // but first, let's make sure the token matches!
@@ -252,7 +238,8 @@ controller.on('slash_command', function (slashCommand, message) {
             JSDOM.fromURL("https://www.bing.com/").then(dom => {
                 var copyright = getBingCopyright(dom);
                 var url = getBingImageUrl(dom);
-                slashCommand.replyPublic(message, getBingPayload(url, copyright));
+                slashCommand.res.end();
+                slashCommand.replyPublicDelayed(message, getBingPayload(url, copyright));
             });
             return;
         }
@@ -263,10 +250,10 @@ controller.on('slash_command', function (slashCommand, message) {
         return;
 
     case "/moviequote":
-    console.log(message.text);
     //var quotes = movies.default;
         if(message.text === "") {
-            slashCommand.replyPublic(message, getMoviePayload(getRandomMovie()));
+            slashCommand.res.end();
+            slashCommand.replyPublicDelayed(message, getMoviePayload(getRandomMovie()));
             return;
         }
     default:
