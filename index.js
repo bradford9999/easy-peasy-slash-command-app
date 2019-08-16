@@ -102,13 +102,16 @@ var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 scheduler(reportingInterval, function() {
     sendDailyBingImage();
-//    sendDailyMovieQuote();
-    
+    sendDailyMovieQuote();    
+});
+
+scheduler("0 * * * * *", function() {
+    sendDailyMovieQuote();    
 });
 
 function sendDailyBingImage() {
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "https://hooks.slack.com/services/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", true);
+    xhr.open("POST", "https://hooks.slack.com/services/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", true);
     xhr.setRequestHeader('Content-Type', 'application/json');
 
     JSDOM.fromURL("https://www.bing.com/").then(dom => {
@@ -117,6 +120,16 @@ function sendDailyBingImage() {
         xhr.send(JSON.stringify(getBingPayload(url, copyright)));
     });
 }
+
+function sendDailyMovieQuote() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "https://hooks.slack.com/services/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", true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.send(JSON.stringify(getMoviePayload(getRandomMovie())));
+
+}
+
+
 function getBingImageUrl(dom) {
     return "http://bing.com"+ dom.window.document.querySelector("#bgLink").getAttribute("href");
 }
@@ -156,6 +169,56 @@ function getBingPayload(url, copyright) {
                             "text": {
                                 "type": "mrkdwn",
                                 "text": copyright
+                            }
+                        }
+                    }]
+                }]
+            };
+}
+
+function getRandomMovie() {
+    var notUsed = quotes.filter(e => e.used == false);
+    if (notUsed.length == 0) {
+        for (var i = 0; i < quotes.length; i++) {
+            quotes[i].used = false;
+        }
+        notUsed = quotes.filter(e => e.used == false);
+    }
+
+    var size = notUsed.length;
+    var index = Math.floor(Math.random() * size);
+    notUsed[index].used = true;
+    return notUsed[index];
+}
+
+function getMoviePayload(movieObject) {
+return {
+                blocks: [
+                {
+                    "type": "section",
+                    "text": {
+                        "type": "mrkdwn",
+                        "text": "\"" + movieObject.quote + "\""
+                    }
+                },
+                {
+                    "type": "actions",
+                    "elements": [{
+                        "type": "button",
+                        "value":"bingStuff",
+                        "text": {
+                            "type": "plain_text",
+                            "text": "What is the movie?",
+                            "emoji": true
+                        },
+                        "confirm": {
+                            "title": {
+                                "type": "plain_text",
+                                "text": "And the movie is..."
+                            },
+                            "text": {
+                                "type": "mrkdwn",
+                                "text": movieObject.movie
                             }
                         }
                     }]
@@ -203,53 +266,9 @@ controller.on('slash_command', function (slashCommand, message) {
     console.log(message.text);
     //var quotes = movies.default;
         if(message.text === "") {
-            //get random quote
-            var notUsed = quotes.filter(e => e.used == false);
-            if (notUsed.length == 0) {
-                for (var i = 0; i < quotes.length; i++) {
-                    quotes[i].used = false;
-                }
-                notUsed = quotes.filter(e => e.used == false);
-            }
-
-            var size = notUsed.length;
-            var index = Math.floor(Math.random() * size);
-            notUsed[index].used = true;
-            slashCommand.replyPublic(message, {
-                blocks: [
-                {
-                    "type": "section",
-                    "text": {
-                        "type": "mrkdwn",
-                        "text": "\"" + notUsed[index].quote + "\""
-                    }
-                },
-                {
-                    "type": "actions",
-                    "elements": [{
-                        "type": "button",
-                        "value":"bingStuff",
-                        "text": {
-                            "type": "plain_text",
-                            "text": "What is the movie?",
-                            "emoji": true
-                        },
-                        "confirm": {
-                            "title": {
-                                "type": "plain_text",
-                                "text": "And the movie is..."
-                            },
-                            "text": {
-                                "type": "mrkdwn",
-                                "text": notUsed[index].movie
-                            }
-                        }
-                    }]
-                }]
-            });
+            slashCommand.replyPublic(message, getMoviePayload(getRandomMovie()));
             return;
         }
-        break;
     default:
         slashCommand.replyPublic(message, "I'm afraid I don't know how to " + message.command + " yet.");
 
