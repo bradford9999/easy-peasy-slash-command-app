@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/DEGoodmanWilson/easy-peasy-slash-command-app#readme",
   "engines": {
-    "node": "6.10.0"
+    "node": "12.7.0"
   },
   "dependencies": {
     "botkit": "0.0.5",
