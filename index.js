@@ -163,7 +163,7 @@ function getBingPayload(url, copyright) {
                                 "text": "Copyright Information:"
                             },
                             "text": {
-                                "type": "mrkdwn",
+                                "type": "plain_text",
                                 "text": copyright
                             }
                         }
@@ -193,7 +193,7 @@ return {
                 {
                     "type": "section",
                     "text": {
-                        "type": "mrkdwn",
+                        "type": "plain_text",
                         "text": "\"" + movieObject.quote + "\""
                     }
                 },
@@ -213,7 +213,7 @@ return {
                                 "text": "And the movie is..."
                             },
                             "text": {
-                                "type": "mrkdwn",
+                                "type": "plain_text",
                                 "text": movieObject.movie
                             }
                         }
