@@ -96,7 +96,7 @@ const { JSDOM } = jsdom;
 
 
 var scheduler = require('./scheduler');
-var reportingInterval = "0 30 11 * * *";
+var reportingInterval = "0 45 12 * * *";
 
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
