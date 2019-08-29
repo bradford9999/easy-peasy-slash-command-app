@@ -238,8 +238,7 @@ controller.on('slash_command', function (slashCommand, message) {
             JSDOM.fromURL("https://www.bing.com/").then(dom => {
                 var copyright = getBingCopyright(dom);
                 var url = getBingImageUrl(dom);
-                slashCommand.res.end();
-                slashCommand.replyPublicDelayed(message, getBingPayload(url, copyright));
+                slashCommand.replyPublic(message, getBingPayload(url, copyright));
             });
             return;
         }
@@ -251,13 +250,26 @@ controller.on('slash_command', function (slashCommand, message) {
 
     case "/moviequote":
     //var quotes = movies.default;
-        if(message.text === "") {
-            slashCommand.res.end();
-            slashCommand.replyPublicDelayed(message, getMoviePayload(getRandomMovie()));
+    console.log(message);
+        if(message.text.trim() === "") {
+            slashCommand.replyPublic(message, getMoviePayload(getRandomMovie()));
             return;
+        } else if(message.text.startsWith("add")) {
+            var regex = /\[([^\]]*)\]/g;
+            var messageSplit = message.text.match(regex);
+            if(messageSplit.length === 2 ) {
+            var moviename = messageSplit[0].replace("[","").replace("]","") + " submitted by:" + message.user_name;
+            var moviequote = messageSplit[1].replace("[","").replace("]","");
+            quotes.push( { quote: moviequote, movie: moviename } );
+            slashCommand.res.end();
+            slashCommand.replyPrivateDelayed(message, "Ive added the quote: " + moviequote + " from the movie: "+ moviename);
+            return;
+            }
         }
     default:
-        slashCommand.replyPublic(message, "I'm afraid I don't know how to " + message.command + " yet.");
+            slashCommand.res.end();
+            slashCommand.replyPrivateDelayed(message, "Im afraid I dont know how to " + message.command + " "+ message.text + " yet.");
+        //slashCommand.replyPublic(message, "I'm afraid I don't know how to " + message.command + " yet.");
 
     }
                     
