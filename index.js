@@ -107,7 +107,7 @@ scheduler(reportingInterval, function() {
 
 function sendDailyBingImage() {
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "https://hooks.slack.com/services/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", true);
+    xhr.open("POST", "https://hooks.slack.com/services/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", true);
     xhr.setRequestHeader('Content-Type', 'application/json');
 
     JSDOM.fromURL("https://www.bing.com/").then(dom => {
@@ -119,7 +119,7 @@ function sendDailyBingImage() {
 
 function sendDailyMovieQuote() {
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "https://hooks.slack.com/services/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", true);
+    xhr.open("POST", "https://hooks.slack.com/services/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", true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send(JSON.stringify(getMoviePayload(getRandomMovie())));
 
