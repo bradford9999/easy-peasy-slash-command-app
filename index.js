@@ -109,7 +109,7 @@ function sendDailyBingImage() {
     var bingRequest = new XMLHttpRequest();
     bingRequest.open('GET', 'https://www.bing.com/HPImageArchive.aspx?format=xml&idx=0&n=1', true);
     bingRequest.onload = function () {     
-         if (bingRequest.readyState === xhr.DONE) {
+         if (bingRequest.readyState === bingRequest.DONE) {
             if (bingRequest.status === 200) {
                 console.log(bingRequest.responseText);
                 var dom = bingRequest.responseText;
@@ -248,7 +248,7 @@ controller.on('slash_command', function (slashCommand, message) {
 var bingRequest = new XMLHttpRequest();
     bingRequest.open('GET', 'https://www.bing.com/HPImageArchive.aspx?format=xml&idx=0&n=1', true);
     bingRequest.onload = function () {     
-         if (bingRequest.readyState === xhr.DONE) {
+         if (bingRequest.readyState === bingRequest.DONE) {
             if (bingRequest.status === 200) {
                 console.log(bingRequest.responseText);
                 var dom = bingRequest.responseText;
