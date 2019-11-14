@@ -109,6 +109,8 @@ function sendDailyBingImage() {
     var bingRequest = new XMLHttpRequest();
     bingRequest.open('GET', '/server', true);
     bingRequest.onload = function () {     
+         if (xhr.readyState === xhr.DONE) {
+        if (xhr.status === 200) {
         console.log(bingRequest.responseText);
         var dom = bingRequest.responseText;
         var copyright = getBingCopyright(dom);
@@ -120,6 +122,7 @@ function sendDailyBingImage() {
         xhr.setRequestHeader('Content-Type', 'application/json');
     
         xhr.send(JSON.stringify(getBingPayload(url, copyright)));
+        }}
     };
     bingRequest.send(null);
 }
