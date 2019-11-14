@@ -256,10 +256,6 @@ var bingRequest = new XMLHttpRequest();
                 console.log(copyright);
                 var url = getBingImageUrl(dom);
                 console.log(url);
-                var xhr = new XMLHttpRequest();
-                xhr.open("POST", process.env.SLACK_URL_BING, true);
-                xhr.setRequestHeader('Content-Type', 'application/json');
-
                 slashCommand.replyPublic(message, getBingPayload(url, copyright));
             }}
     };
