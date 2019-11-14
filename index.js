@@ -106,15 +106,20 @@ scheduler(reportingInterval, function() {
 });
 
 function sendDailyBingImage() {
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", process.env.SLACK_URL_BING, true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-
-    JSDOM.fromURL("https://www.bing.com/").then(dom => {
+    var bingRequest = new XMLHttpRequest();
+    bingRequest.open('GET', '/server', true);
+    bingRequest.onload = function () {     
+        var dom = bingRequest.response;
         var copyright = getBingCopyright(dom);
         var url = getBingImageUrl(dom);
+    
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", process.env.SLACK_URL_BING, true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+    
         xhr.send(JSON.stringify(getBingPayload(url, copyright)));
-    });
+    };
+    bingRequest.send(null);
 }
 
 function sendDailyMovieQuote() {
@@ -127,12 +132,13 @@ function sendDailyMovieQuote() {
 
 
 function getBingImageUrl(dom) {
-    return "http://bing.com"+ dom.window.document.querySelector("#preloadBg").getAttribute("href");
+    var regex = /<url>(.*)<\/url>/
+    return dom.match(regex)[1];
 }
 
 function getBingCopyright(dom) {
-    var regex = /{"copyright":"(.*)","copyrightlink"/;
-    var copyright = dom.window.document.body.innerHTML.match(regex)[1];
+    var regex = /<copyright>(.*)<\/copyright>/;
+    var copyright = dom.match(regex)[1];
     return copyright;
 }
 
