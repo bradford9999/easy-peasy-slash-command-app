@@ -111,12 +111,9 @@ function sendDailyBingImage() {
     bingRequest.onload = function () {     
          if (bingRequest.readyState === bingRequest.DONE) {
             if (bingRequest.status === 200) {
-                console.log(bingRequest.responseText);
                 var dom = bingRequest.responseText;
                 var copyright = getBingCopyright(dom);
-                console.log(copyright);
                 var url = getBingImageUrl(dom);
-                console.log(url);
                 var xhr = new XMLHttpRequest();
                 xhr.open("POST", process.env.SLACK_URL_BING, true);
                 xhr.setRequestHeader('Content-Type', 'application/json');
@@ -138,7 +135,7 @@ function sendDailyMovieQuote() {
 
 function getBingImageUrl(dom) {
     var regex = /<url>(.*)<\/url>/
-    return dom.match(regex)[1];
+    return "http://bing.com" + dom.match(regex)[1];
 }
 
 function getBingCopyright(dom) {
@@ -250,12 +247,9 @@ var bingRequest = new XMLHttpRequest();
     bingRequest.onload = function () {     
          if (bingRequest.readyState === bingRequest.DONE) {
             if (bingRequest.status === 200) {
-                console.log(bingRequest.responseText);
                 var dom = bingRequest.responseText;
                 var copyright = getBingCopyright(dom);
-                console.log(copyright);
                 var url = getBingImageUrl(dom);
-                console.log(url);
                 slashCommand.replyPublic(message, getBingPayload(url, copyright));
             }}
     };
