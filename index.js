@@ -107,7 +107,7 @@ scheduler(reportingInterval, function() {
 
 function sendDailyBingImage() {
     var bingRequest = new XMLHttpRequest();
-    bingRequest.open('GET', '/server', true);
+    bingRequest.open('GET', 'https://www.bing.com/HPImageArchive.aspx?format=xml&idx=0&n=1', true);
     bingRequest.onload = function () {     
          if (xhr.readyState === xhr.DONE) {
             if (xhr.status === 200) {
@@ -246,7 +246,7 @@ controller.on('slash_command', function (slashCommand, message) {
     // If we made it here, just echo what the user typed back at them
         if(message.text === "") {
 var bingRequest = new XMLHttpRequest();
-    bingRequest.open('GET', '/server', true);
+    bingRequest.open('GET', 'https://www.bing.com/HPImageArchive.aspx?format=xml&idx=0&n=1', true);
     bingRequest.onload = function () {     
          if (xhr.readyState === xhr.DONE) {
             if (xhr.status === 200) {
