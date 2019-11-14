@@ -110,19 +110,19 @@ function sendDailyBingImage() {
     bingRequest.open('GET', '/server', true);
     bingRequest.onload = function () {     
          if (xhr.readyState === xhr.DONE) {
-        if (xhr.status === 200) {
-        console.log(bingRequest.responseText);
-        var dom = bingRequest.responseText;
-        var copyright = getBingCopyright(dom);
-        console.log(copyright);
-        var url = getBingImageUrl(dom);
-     console.log(url);
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", process.env.SLACK_URL_BING, true);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-    
-        xhr.send(JSON.stringify(getBingPayload(url, copyright)));
-        }}
+            if (xhr.status === 200) {
+                console.log(bingRequest.responseText);
+                var dom = bingRequest.responseText;
+                var copyright = getBingCopyright(dom);
+                console.log(copyright);
+                var url = getBingImageUrl(dom);
+                console.log(url);
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", process.env.SLACK_URL_BING, true);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+
+                xhr.send(JSON.stringify(getBingPayload(url, copyright)));
+            }}
     };
     bingRequest.send(null);
 }
@@ -245,12 +245,25 @@ controller.on('slash_command', function (slashCommand, message) {
 
     // If we made it here, just echo what the user typed back at them
         if(message.text === "") {
-
-            JSDOM.fromURL("https://www.bing.com/").then(dom => {
+var bingRequest = new XMLHttpRequest();
+    bingRequest.open('GET', '/server', true);
+    bingRequest.onload = function () {     
+         if (xhr.readyState === xhr.DONE) {
+            if (xhr.status === 200) {
+                console.log(bingRequest.responseText);
+                var dom = bingRequest.responseText;
                 var copyright = getBingCopyright(dom);
+                console.log(copyright);
                 var url = getBingImageUrl(dom);
+                console.log(url);
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", process.env.SLACK_URL_BING, true);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+
                 slashCommand.replyPublic(message, getBingPayload(url, copyright));
-            });
+            }}
+    };
+    bingRequest.send(null);
             return;
         }
 
