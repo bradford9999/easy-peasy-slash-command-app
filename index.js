@@ -107,7 +107,7 @@ scheduler(reportingInterval, function() {
 
 function sendDailyBingImage() {
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", process.env.SLACK_URL, true);
+    xhr.open("POST", process.env.SLACK_URL_BING, true);
     xhr.setRequestHeader('Content-Type', 'application/json');
 
     JSDOM.fromURL("https://www.bing.com/").then(dom => {
@@ -119,7 +119,7 @@ function sendDailyBingImage() {
 
 function sendDailyMovieQuote() {
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", process.env.SLACK_URL, true);
+    xhr.open("POST", process.env.SLACK_URL_MOVIE, true);
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.send(JSON.stringify(getMoviePayload(getRandomMovie())));
 
