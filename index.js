@@ -106,6 +106,7 @@ scheduler(reportingInterval, function() {
 });
 
 function sendDailyBingImage() {
+    //TODO MAKE THIS BETTER
     var bingRequest = new XMLHttpRequest();
     bingRequest.open('GET', 'https://www.bing.com/HPImageArchive.aspx?format=xml&idx=0&n=1', true);
     bingRequest.onload = function () {     
@@ -241,6 +242,7 @@ controller.on('slash_command', function (slashCommand, message) {
     // Otherwise just echo back to them what they sent us.
 
     // If we made it here, just echo what the user typed back at them
+            //TODO IMPLEMENT DATE OPTION! with the image archive, we should be able to figure it out
         if(message.text === "") {
 var bingRequest = new XMLHttpRequest();
     bingRequest.open('GET', 'https://www.bing.com/HPImageArchive.aspx?format=xml&idx=0&n=1', true);
