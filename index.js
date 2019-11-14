@@ -127,7 +127,7 @@ function sendDailyMovieQuote() {
 
 
 function getBingImageUrl(dom) {
-    return "http://bing.com"+ dom.window.document.querySelector("#bgLink").getAttribute("href");
+    return "http://bing.com"+ dom.window.document.querySelector("#preloadBg").getAttribute("href");
 }
 
 function getBingCopyright(dom) {
