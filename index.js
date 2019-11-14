@@ -109,7 +109,7 @@ function sendDailyBingImage() {
     var bingRequest = new XMLHttpRequest();
     bingRequest.open('GET', '/server', true);
     bingRequest.onload = function () {     
-        var dom = bingRequest.response;
+        var dom = bingRequest.responseText;
         var copyright = getBingCopyright(dom);
         var url = getBingImageUrl(dom);
     
