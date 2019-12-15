@@ -101,7 +101,7 @@ var reportingInterval = "0 50 15 * * *";
 var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 scheduler(reportingInterval, function() {
-    sendDailyBingImage();
+    //sendDailyBingImage();
     sendDailyMovieQuote();    
 });
 
